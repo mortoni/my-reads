@@ -23,7 +23,7 @@ class BooksApp extends React.Component {
           <ListBook />
         )}/>
 
-        <Route path='/add' render={() => (
+        <Route path='/search' render={() => (
           <AddBook />
         )}/>
 
