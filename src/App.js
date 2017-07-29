@@ -1,6 +1,6 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
-import BookShelf from './components/BookShelf'
+import ListBook from './components/ListBook'
 import { Route } from 'react-router-dom'
 import './App.css'
 
@@ -20,21 +20,7 @@ class BooksApp extends React.Component {
       <div className="app">
 
         <Route exact path='/' render={() => (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <BookShelf shelf="Currently Reading"/>
-                <BookShelf shelf="Want to Read"/>
-                <BookShelf shelf="Read"/>
-              </div>
-            </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
-          </div>
+          <ListBook/>
         )}/>
 
         <Route path='/create' render={() => (
