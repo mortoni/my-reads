@@ -1,6 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import BookShelf from './components/BookShelf'
+import { Route } from 'react-router-dom'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -17,7 +18,26 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
+
+        <Route exact path='/' render={() => (
+          <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <div className="list-books-content">
+              <div>
+                <BookShelf shelf="Currently Reading"/>
+                <BookShelf shelf="Want to Read"/>
+                <BookShelf shelf="Read"/>
+              </div>
+            </div>
+            <div className="open-search">
+              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+            </div>
+          </div>
+        )}/>
+
+        <Route path='/create' render={() => (
           <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
@@ -38,23 +58,8 @@ class BooksApp extends React.Component {
               <ol className="books-grid"></ol>
             </div>
           </div>
-        ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <BookShelf shelf="Currently Reading"/>
-                <BookShelf shelf="Want to Read"/>
-                <BookShelf shelf="Read"/>
-              </div>
-            </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
-          </div>
-        )}
+        )}/>
+
       </div>
     )
   }
