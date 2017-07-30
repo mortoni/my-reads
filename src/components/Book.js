@@ -5,13 +5,22 @@ class Book extends Component {
 
   static propTypes = {
     book: PropTypes.object.isRequired,
+    // onUpdateBook: PropTypes.func.isRequired
+  }
+
+  update(shelf) {
+    this.props.onUpdateBook(this.props.book, shelf)
   }
 
   render() {
+    const { book } = this.props
+
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ backgroundImage: `url(${this.props.book.imageLinks.smallThumbnail})` }}></div>
+          {book.imageLinks && (
+            <div className="book-cover" style={{ backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+          )}
           <div className="book-shelf-changer">
             <select>
               <option value="none" disabled>Move to...</option>
@@ -22,10 +31,10 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{this.props.book.title}</div>
+        <div className="book-title">{book.title}</div>
         <div className="book-authors">
 
-          {this.props.book.authors.map((author) => (
+          {book.authors && book.authors.map((author) => (
             <div key={ author }>
               <span>{ author }</span>
             </div>

@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 class ListBook extends Component {
 
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onUpdateBook: PropTypes.func.isRequired
   }
 
   getCurrentlyReading() {
@@ -29,9 +30,21 @@ class ListBook extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf shelf="Currently Reading" books={this.getCurrentlyReading()}/>
-            <BookShelf shelf="Want to Read" books={this.getWantToRead()}/>
-            <BookShelf shelf="Read" books={this.getRead()}/>
+            <BookShelf
+              shelf="Currently Reading"
+              books={this.getCurrentlyReading()}
+              onUpdateBook={this.props.onUpdateBook}
+            />
+            <BookShelf
+              shelf="Want to Read"
+              books={this.getWantToRead()}
+              onUpdateBook={this.props.onUpdateBook}
+            />
+            <BookShelf
+              shelf="Read"
+              books={this.getRead()}
+              onUpdateBook={this.props.onUpdateBook}
+            />
           </div>
         </div>
         <div className="open-search">
