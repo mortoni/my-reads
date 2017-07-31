@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import * as BooksAPI from '../BooksAPI'
-import Book from '../components/Book'
+import Book from '../containers/Book'
 
 class SearchBook extends Component {
   state = {
@@ -21,16 +21,20 @@ class SearchBook extends Component {
     )
   }
 
+  updateBook = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+  }
+
   searchBook() {
     BooksAPI.search(this.state.query, 20).then((books) => {
       this.setState(state => ({
-        foundBooks: books
+        foundBooks: books.filter((book) => book.shelf === 'none')
       }))
     })
   }
 
   render() {
-    const { query } = this.state
+    const { query, foundBooks } = this.state
 
     return (
       <div className="search-books">
@@ -49,10 +53,11 @@ class SearchBook extends Component {
 
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.foundBooks.map((book) => (
+            {foundBooks.map((book) => (
               <li key={book.id}>
                 <Book
                   book={book}
+                  onUpdateBook={this.updateBook}
                 />
               </li>
             ))}

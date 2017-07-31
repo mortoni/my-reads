@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
 class Book extends Component {
+  state = {
+    value: this.props.book.shelf
+  }
 
   static propTypes = {
     book: PropTypes.object.isRequired,
-    // onUpdateBook: PropTypes.func.isRequired
+    onUpdateBook: PropTypes.func.isRequired
   }
 
-  update(shelf) {
-    this.props.onUpdateBook(this.props.book, shelf)
+  update = (shelf) => {
+    this.setState({ value: shelf },
+      () => {
+        this.props.onUpdateBook(this.props.book, shelf)
+      })
   }
 
   render() {
@@ -19,10 +25,16 @@ class Book extends Component {
       <div className="book">
         <div className="book-top">
           {book.imageLinks && (
-            <div className="book-cover" style={{ backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+            <div
+              className="book-cover"
+              style={{ backgroundImage: `url(${book.imageLinks.thumbnail})` }}>
+            </div>
           )}
           <div className="book-shelf-changer">
-            <select>
+            <select
+              value={this.state.value}
+              onChange={ (event) => this.update(event.target.value) }>
+
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
