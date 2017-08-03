@@ -9,6 +9,18 @@ class SearchBook extends Component {
     foundBooks: []
   }
 
+  setCategory(books) {
+    this.props.books.map((book) => {
+      books.map((foundBook) => {
+        if(book.id === foundBook.id) {
+          foundBook.shelf = book.shelf
+        }
+      })
+    })
+
+    return books;
+  }
+
   updateQuery = (query) => {
     this.setState({ query: query.trim() },
       () => {
@@ -28,7 +40,7 @@ class SearchBook extends Component {
   searchBook() {
     BooksAPI.search(this.state.query, 20).then((books) => {
       this.setState(state => ({
-        foundBooks: books.filter((book) => book.shelf === 'none')
+        foundBooks: this.setCategory(books)
       }))
     })
   }
@@ -57,7 +69,7 @@ class SearchBook extends Component {
               <li key={book.id}>
                 <Book
                   book={book}
-                  onUpdateBook={this.updateBook}
+                  onUpdateBook={this.props.onUpdateBook}
                 />
               </li>
             ))}
