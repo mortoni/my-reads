@@ -11,11 +11,10 @@ class SearchBook extends Component {
 
   setCategory(books) {
     this.props.books.map((book) => {
-      books.map((foundBook) => {
-        if(book.id === foundBook.id) {
-          foundBook.shelf = book.shelf
-        }
-      })
+      const index = books.findIndex(b => b.id === book.id)
+      if(index >= 0) {
+        books[index].shelf = book.shelf
+      }
     })
 
     return books;
