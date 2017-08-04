@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from '../BooksAPI'
 import Book from '../containers/Book'
@@ -10,37 +10,40 @@ class SearchBook extends Component {
   }
 
   setCategory(books) {
+    books.map((b) => {
+      b.shelf = 'none'
+    })
+
     this.props.books.map((book) => {
       const index = books.findIndex(b => b.id === book.id)
       if(index >= 0) {
         books[index].shelf = book.shelf
       }
     })
-
+    
     return books;
   }
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() },
+    this.setState({ query },
       () => {
         if(query.length > 0) {
           this.searchBook()
-        } else {
-          this.setState({ foundBooks: [] })
         }
       }
     )
   }
 
-  updateBook = (book, shelf) => {
-    BooksAPI.update(book, shelf)
-  }
-
   searchBook() {
     BooksAPI.search(this.state.query, 20).then((books) => {
-      this.setState(state => ({
-        foundBooks: this.setCategory(books)
-      }))
+      if(Array.isArray(books)) {
+        this.setState(state => ({
+          foundBooks: this.setCategory(books)
+        }))
+      } else {
+        this.setState({ foundBooks: [] })
+      }
+
     })
   }
 
