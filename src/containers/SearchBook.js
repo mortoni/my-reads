@@ -12,6 +12,7 @@ class SearchBook extends Component {
   setCategory(books) {
     books.map((b) => {
       b.shelf = 'none'
+      return b
     })
 
     this.props.books.map((book) => {
@@ -19,8 +20,9 @@ class SearchBook extends Component {
       if(index >= 0) {
         books[index].shelf = book.shelf
       }
+      return book
     })
-    
+
     return books;
   }
 
